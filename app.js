@@ -1,50 +1,43 @@
 function onReady() {
-  let iDs = 0;
-  let toDos = [];
-  const addToDoForm = document.getElementById('addToDoForm');
+  let iD = 0;
+  const addToDoForm=document.getElementById('addToDoForm');
+  let toDos = []; //an array which is why there are [] brackets//
 
-  function createNewToDo () {
+  function renderTheUI(){
+    const toDoList=document.getElementById('toDoList');
+    toDos.forEach(function(toDo){
+      const newLI = document.createElement('li');
+      const checkbox = document.createElement('input');
+      checkbox.type = "checkbox";
+
+      newLI.textContent = toDo.title;
+
+      toDoList.appendChild(newLI);
+      newLI.appendChild(checkbox);
+    })
+
+  }
+
+  function createNewToDo (){
     const newToDoText = document.getElementById('newToDoText');
-    if (!newToDoText.value) { return; }
-
     toDos.push({
       title: newToDoText.value,
       complete: false,
       iD: ''
     });
 
-    newToDoText.value='';
-
+    newToDoText.value = '';
     renderTheUI();
   }
 
   addToDoForm.addEventListener('submit', event => {
     event.preventDefault();
-    createNewToDo()
-  });
-  
-
-
-    renderTheUI();
+    createNewToDo();
   });
 
-  function renderTheUI() {
-    const toDoList = document.getElementById('toDoList');
+  renderTheUI();
+}
 
-    toDoList.textContent = '';
-
-    toDos.forEach(function(toDo) {
-      const newLi = document.createElement('li');
-      const checkbox = document.createElement('input');
-      checkbox.type = "checkbox";
-
-      newLi.textContent = toDo.title;
-
-      toDoList.appendChild(newLi);
-      newLi.appendChild(checkbox);
-    });
-};
-
-window.onload=function(){
+window.onload = function() {
   onReady();
 };
